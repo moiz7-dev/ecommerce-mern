@@ -11,6 +11,7 @@ app.use(cookieParser());
 // Route imports
 app.use('/api/v1', require('./routes/product'));
 app.use('/api/v1', require('./routes/user'));
+app.use('/api/v1', require('./routes/order')); 
 
 // Error middlewares
 app.use(errorMiddleware);
