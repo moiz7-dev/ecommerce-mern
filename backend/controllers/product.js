@@ -16,16 +16,16 @@ exports.createProduct = catchAsyncErrors(async (req, res, next) => {
     })
 });
 
-exports.getAllProducts = catchAsyncErrors(async (msg, req, res, next) => {
+exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
     const productsCount = await Product.countDocuments();
-
-    const resultsPerPage = req.query.limit || 5;
-
+    
+    const resultsPerPage = req.query?.limit || 5;
+    
     const apiFeatures = new ApiFeatures(Product, req.query).search().filter().pagination(resultsPerPage);
-
+    
     const products = await apiFeatures.query;
-
+    
     res.status(200).json({
         success: true,
         products,
@@ -88,3 +88,51 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
         product
     })
 })
+
+// create new review or update the review
+exports.createProductReview = catchAsyncErrors(async (req, res, next) => {
+
+    const {rating, comment, productId} = req.body;
+
+    const review = {
+        user: req.user.id,
+        name: req.user.name,
+        rating: Number(rating),
+        comment
+    };
+
+    const product = await Product.findByIdAndUpdate(productId);
+
+    if(!product){
+        return next(new ErrorHandler(`Product doesn\'t exists on given ID: ${productId}`));
+    }
+
+    const isReviewed = product.reviews.find(rev => rev.user.toString() === req.user.id);
+
+    if(isReviewed){
+        product.reviews.map(review => {
+            if(review.user.toString() === req.user.id){
+                review.rating = Number(rating);
+                review.comment = comment
+            }
+        })
+    }else{
+        product.reviews.push(review);
+        product.numOfReviews = product.reviews.length;
+    }
+
+    
+    let total = 0;
+    product.reviews.map(review => {
+        total += review.rating;
+    })
+    
+    product.ratings = total / product.reviews.length; 
+
+    await product.save({ validateBeforeSave: false});
+
+    res.status(200).json({
+        success: true,
+    });
+
+});
