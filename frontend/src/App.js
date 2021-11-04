@@ -1,6 +1,6 @@
+import { useEffect } from 'react';
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import WebFont from 'webfontloader';
-import { useEffect } from 'react';
 
 import Header from './components/layout/Header/Header.js';
 import Footer from './components/layout/Footer/Footer.js';
