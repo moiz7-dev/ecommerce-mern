@@ -5,9 +5,7 @@ const initDatabase = () => {
     .then((data) => {
       console.log(`Mongodb Server connected on ${data.connection.host}`);
     })
-    // .catch((err) => {
-    //   console.log(`Mongodb connection ERROR!: ${err}`);
-    // });
+
 };
 
 module.exports = initDatabase;

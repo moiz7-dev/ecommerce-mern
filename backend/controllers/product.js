@@ -20,7 +20,7 @@ exports.getAllProducts = catchAsyncErrors(async (req, res, next) => {
 
     const productsCount = await Product.countDocuments();
     
-    const resultsPerPage = req.query?.limit || 5;
+    const resultsPerPage = req.query?.limit || 8;
     
     const apiFeatures = new ApiFeatures(Product, req.query).search().filter().pagination(resultsPerPage);
     
@@ -39,10 +39,7 @@ exports.updateProduct = catchAsyncErrors(async (req, res) => {
     const product = await Product.findByIdAndUpdate(req.params.id, req.body, {new: true, runValidators: true});
 
     if(!product){
-        // return res.status(400).json({
-        //     success: false,
-        //     message: "Product not found"
-        // })
+
         return next(new ErrorHandler('Product not found', 400));
     }
 
@@ -58,10 +55,7 @@ exports.deleteProduct = catchAsyncErrors(async(req, res, next) => {
     const product = await Product.findByIdAndDelete(req.body.id);
 
     if(!product){
-        // return res.status(400).json({
-        //     success: false,
-        //     message: 'Product not found'
-        // })
+
         return next(new ErrorHandler('Product not found', 400));
     }
 
@@ -76,10 +70,7 @@ exports.getSingleProduct = catchAsyncErrors(async (req, res, next) => {
     const product = await Product.findById(req.params.id);
 
     if(!product){
-        // return res.status(400).json({
-        //     success: false,
-        //     message: 'Product not found'
-        // })
+
         return next(new ErrorHandler('Product not found', 400));
     }
 
