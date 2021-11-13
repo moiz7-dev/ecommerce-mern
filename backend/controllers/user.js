@@ -8,27 +8,35 @@ const cloudinary = require("cloudinary");
 
 // Register new user
 exports.registerUser = catchAsyncErrors(async (req, res, next) => {
-    // const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
-    //     folder: 'avatars',
-    //     width: 150,
-    //     crop: 'scale'
-    // })
+    const { name, email, password } = req.body;
+    let query = {
+        avatar: {
+            public_id: '',
+            url: ''
+        }};
 
+    if(req.body.avatar){
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: 'scale'
+        });
 
-    console.log(req.body)
-    // const { name, email, password } = req.body;
+        query = {
+            avatar: {
+                public_id: myCloud.public_id,
+                url: myCloud.secure_url
+            }
+        }
+    }
 
-    // const user = await User.create({
-    //     name,
-    //     email,
-    //     password,
-    //     avatar: {
-    //         public_id: 'myCloud.public_id',
-    //         url: 'myCloud.secure_url' 
-    //     }
-    // })
+    const user = await User.create({ 
+        ...query, 
+        name,
+        email,
+        password})
 
-    // sendToken(user, 201, res);
+    sendToken(user, 201, res);
 });
 
 // login 
@@ -139,7 +147,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
 // get User details
 exports.getUserDetails = catchAsyncErrors(async (req, res, next) => {
     const user = await User.findById(req.user.id);
-
     res.status(200).json({
         success: true,
         user

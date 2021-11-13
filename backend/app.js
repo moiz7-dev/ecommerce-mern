@@ -3,8 +3,6 @@ const app = express();
 const cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 const fileUpload = require('express-fileupload');
-const multer = require('multer');
-const upload = multer();
 
 const errorMiddleware = require('./middleware/error');
 
@@ -12,7 +10,6 @@ const errorMiddleware = require('./middleware/error');
 app.use(express.json());
 app.use(cookieParser());
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(upload.single('test'));
 app.use(fileUpload())
 
 // Route imports

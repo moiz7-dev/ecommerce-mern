@@ -29,7 +29,7 @@ const LoginSignUp = ({ history }) => {
   
   const { name, email, password } = user;
   
-  const [avatar, setAvatar] = useState("/Profile.png");
+  const [avatar, setAvatar] = useState("");
   const [avatarPreview, setAvatarPreview] = useState("/Profile.png");
   
   const {error, loading, isAuthenticated} = useSelector(state => state.user);
@@ -56,7 +56,7 @@ const LoginSignUp = ({ history }) => {
   const registerSubmit = (e) => {
     e.preventDefault();
 
-    const myForm = new FormData();
+    let myForm = new FormData();
 
     myForm.set("name", name);
     myForm.set("email", email);
