@@ -13,7 +13,16 @@ import {
   CLEAR_ERRORS,
 } from "../constants/user";
 
-const userReducer = (state = { user: {} }, action) => {
+const initialState = {
+  user: {
+    loading: false,
+    isAuthenticated: false,
+    user: null,
+    error: null,
+  }
+}
+
+const userReducer = (state = initialState, action) => {
   switch (action.type) {
     case LOGIN_REQUEST:
     case REGISTER_REQUEST:

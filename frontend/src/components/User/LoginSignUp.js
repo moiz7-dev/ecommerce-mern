@@ -41,7 +41,7 @@ const LoginSignUp = ({ history }) => {
     }
 
     if(isAuthenticated){
-      history.push('/accounts');
+      history.push('/account');
     }
 
   }, [error, dispatch, alert, history, isAuthenticated]);

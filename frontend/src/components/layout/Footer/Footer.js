@@ -16,7 +16,7 @@ const Footer = () => {
         
             <div className="midFooter">
                 <h1>MR-Ecommerce</h1>
-                <p>High quality is our firt priority.</p>
+                <p>Moiz Ratlamwala's Ecommerce Demo MERN App.</p>
                 <p>Copyrights 2021 &copy; MR-ecommerce.</p>
                 <p></p>
             </div>

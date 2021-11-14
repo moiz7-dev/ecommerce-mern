@@ -14,6 +14,8 @@ import './App.css';
 import LoginSignUp from './components/User/LoginSignUp.js';
 import store from './store';
 import { loadUser} from './actions/user';
+import Profile from './components/User/Profile.js';
+import ProtectedRoute from './components/Route/ProtectedRoute.js';
 
 const App = () => {
 
@@ -41,6 +43,7 @@ const App = () => {
             <Route path="/products/:keyword" component={Products} />
             
             <Route exact path="/login" component={LoginSignUp} />
+            <ProtectedRoute exact path="/account" component={Profile} />
             <Footer />
         </Router>
     )
