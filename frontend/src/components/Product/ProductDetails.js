@@ -1,4 +1,4 @@
-import React, { Fragment, useEffect } from "react";
+import React, { Fragment, useEffect, useState } from "react";
 import Carousel from "react-material-ui-carousel";
 import "./ProductDetails.css";
 import { useSelector, useDispatch } from "react-redux";
@@ -25,6 +25,7 @@ import { Rating } from "@material-ui/lab";
 const ProductDetails = ({ match }) => {
   const dispatch = useDispatch();
   const alert = useAlert();
+  const [quantity, setQuantity] = useState(1);
 
   const { product, loading, error } = useSelector(
     (state) => state.productDetails
@@ -36,6 +37,16 @@ const ProductDetails = ({ match }) => {
     readOnly: true,
     precision: 0.5,
   };
+
+  const decreaseQuantity = () => {
+    if(quantity < 1) return;
+    setQuantity(quantity-1);
+  }
+  
+  const increaseQuantity = () => {
+    if(product.Stock <= quantity) return;
+    setQuantity(quantity+1);
+  }
 
   useEffect(() => {
     if (error) {
@@ -84,9 +95,9 @@ const ProductDetails = ({ match }) => {
                 <h1>{`₹${product.price}`}</h1>
                 <div className="detailsBlock-3-1">
                   <div className="detailsBlock-3-1-1">
-                    <button>-</button>
-                    <input type="number" />
-                    <button>+</button>
+                    <button onClick={decreaseQuantity}>-</button>
+                    <input type="number" value={quantity} readOnly/>
+                    <button onClick={increaseQuantity}>+</button>
                   </div>
                   <button
                     disabled={product.Stock < 1 ? true : false}

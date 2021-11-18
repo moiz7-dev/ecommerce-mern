@@ -140,7 +140,6 @@ exports.resetPassword = catchAsyncErrors(async (req, res, next) => {
     await user.save();
 
     sendToken(user, 200, res);
-
 });
 
 
@@ -183,7 +182,25 @@ exports.updateProfile = catchAsyncErrors(async (req, res, next) => {
     const userData = {
         name: req.body.name,
         email: req.body.email,
-        // avatar  cloudinary is not implemented yet
+    }
+
+    if(req.body.avatar){
+        const user = await User.findById(req.user.id);
+
+        const imageId = user.avatar.public_id;
+
+        await cloudinary.v2.uploader.destroy(imageId);
+
+        const myCloud = await cloudinary.v2.uploader.upload(req.body.avatar, {
+            folder: 'avatars',
+            width: 150,
+            crop: 'scale'
+        });
+
+        userData.avatar = {
+            public_id: myCloud.public_id,
+            url: myCloud.secure_url
+        }
     }
 
     const user = await User.findByIdAndUpdate(req.user.id, userData);

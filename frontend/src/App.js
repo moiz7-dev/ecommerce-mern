@@ -16,6 +16,10 @@ import store from './store';
 import { loadUser} from './actions/user';
 import Profile from './components/User/Profile.js';
 import ProtectedRoute from './components/Route/ProtectedRoute.js';
+import UpdateProfile from './components/User/UpdateProfile.js';
+import UpdatePassword from './components/User/UpdatePassword.js';
+import ForgotPassword from './components/User/ForgotPassword.js';
+import ResetPassword from './components/User/ResetPassword.js';
 
 const App = () => {
 
@@ -42,8 +46,13 @@ const App = () => {
             <Route exact path="/products" component={Products} />
             <Route path="/products/:keyword" component={Products} />
             
-            <Route exact path="/login" component={LoginSignUp} />
             <ProtectedRoute exact path="/account" component={Profile} />
+            <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
+            <ProtectedRoute exact path="/password/update" component={UpdatePassword} />
+
+            <Route exact path="/login" component={LoginSignUp} />
+            <Route exact path="/password/forgot" component={ForgotPassword} />
+            <Route exact path="/password/reset/:token" component={ResetPassword} />
             <Footer />
         </Router>
     )

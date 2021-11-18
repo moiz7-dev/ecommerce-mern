@@ -3,11 +3,14 @@ import Thunk from 'redux-thunk';
 import {composeWithDevTools} from 'redux-devtools-extension';
 import { product, productDetails} from './reducers/product';
 import userReducer from './reducers/user';
+import {updateProfile, forgotPassword} from './reducers/updateUser';
 
 const reducers = combineReducers({
     products: product,
     productDetails,
-    user: userReducer
+    user: userReducer,
+    profile: updateProfile,
+    forgotPassword
 });
 
 let initialState = {};
