@@ -20,6 +20,7 @@ import UpdateProfile from './components/User/UpdateProfile.js';
 import UpdatePassword from './components/User/UpdatePassword.js';
 import ForgotPassword from './components/User/ForgotPassword.js';
 import ResetPassword from './components/User/ResetPassword.js';
+import Cart from './components/Cart/Cart.js';
 
 const App = () => {
 
@@ -45,6 +46,7 @@ const App = () => {
             <Route exact path="/search" component={Search} />
             <Route exact path="/products" component={Products} />
             <Route path="/products/:keyword" component={Products} />
+            <Route exact path="/cart" component={Cart} />
             
             <ProtectedRoute exact path="/account" component={Profile} />
             <ProtectedRoute exact path="/me/update" component={UpdateProfile} />

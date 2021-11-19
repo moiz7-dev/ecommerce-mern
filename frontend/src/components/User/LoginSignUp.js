@@ -9,7 +9,7 @@ import { useSelector, useDispatch } from "react-redux";
 import {useAlert} from 'react-alert';
 import Loader from '../layout/Loader/Loader';
 
-const LoginSignUp = ({ history }) => {
+const LoginSignUp = ({ history, location }) => {
 
   const loginTab = useRef(null);
   const registerTab = useRef(null);
@@ -41,10 +41,11 @@ const LoginSignUp = ({ history }) => {
     }
 
     if(isAuthenticated){
-      history.push('/account');
+      const redirect = new URLSearchParams(location.search).get('redirect') || 'account';
+      history.push(redirect);
     }
 
-  }, [error, dispatch, alert, history, isAuthenticated]);
+  }, [error, dispatch, alert, history, isAuthenticated, location]);
 
   const loginSubmit = (e) => {
     e.preventDefault();

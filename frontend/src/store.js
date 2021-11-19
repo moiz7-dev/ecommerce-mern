@@ -4,16 +4,22 @@ import {composeWithDevTools} from 'redux-devtools-extension';
 import { product, productDetails} from './reducers/product';
 import userReducer from './reducers/user';
 import {updateProfile, forgotPassword} from './reducers/updateUser';
+import {cartReducer} from './reducers/cart';
 
 const reducers = combineReducers({
     products: product,
     productDetails,
     user: userReducer,
     profile: updateProfile,
-    forgotPassword
+    forgotPassword,
+    cart: cartReducer
 });
 
-let initialState = {};
+let initialState = {
+    cart: {
+        cartItems: localStorage.getItem('cartItems') ? JSON.parse(localStorage.getItem('cartItems')) : []
+    }
+};
 
 const middlewares = [Thunk];
 

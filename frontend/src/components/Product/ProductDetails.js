@@ -11,7 +11,7 @@ import ReviewCard from "./ReviewCard.js";
 import Loader from "../layout/Loader/Loader";
 import { useAlert } from "react-alert";
 import MetaData from "../layout/MetaData";
-// import { addItemsToCart } from "../../actions/cartAction";
+import { addItemsToCart } from "../../actions/cart";
 // import {
 //   Dialog,
 //   DialogActions,
@@ -46,6 +46,11 @@ const ProductDetails = ({ match }) => {
   const increaseQuantity = () => {
     if(product.Stock <= quantity) return;
     setQuantity(quantity+1);
+  }
+
+  const cartItemsHandler = () => {
+    dispatch(addItemsToCart(match.params.id, quantity));
+    alert.success('Item added successfully');
   }
 
   useEffect(() => {
@@ -101,6 +106,7 @@ const ProductDetails = ({ match }) => {
                   </div>
                   <button
                     disabled={product.Stock < 1 ? true : false}
+                    onClick={cartItemsHandler}
                   >
                     Add to Cart
                   </button>

@@ -1,9 +1,9 @@
-import { ADD_TO_CART } from "../constants/cart";
+import { ADD_TO_CART, REMOVE_FROM_CART } from "../constants/cart";
 
-export const product = (state = { cartItems: [] }, action) => {
+export const cartReducer = (state = { cartItems: [] }, action) => {
   switch (action.type) {
     case ADD_TO_CART:
-      const item = payload.action;
+      const item = action.payload;
 
       const isItemExists = state.cartItems.find(
         (i) => i.product === item.product
@@ -21,6 +21,12 @@ export const product = (state = { cartItems: [] }, action) => {
           ...state,
           cartItems: [...state.cartItems, item],
         };
+      }
+
+    case REMOVE_FROM_CART:
+      return {
+        ...state,
+        cartItems: state.cartItems.filter(cartItem => cartItem.product !== action.payload)
       }
     default:
       return state;
