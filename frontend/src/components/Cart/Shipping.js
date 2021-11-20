@@ -9,9 +9,11 @@ import PublicIcon from "@material-ui/icons/Public";
 import PhoneIcon from "@material-ui/icons/Phone";
 import TransferWithinAStationIcon from "@material-ui/icons/TransferWithinAStation";
 import {Country, State} from "country-state-city";
+import CheckoutSteps from "./CheckoutSteps";
 import './Shipping.css';
+import { saveShippingInfo } from '../../actions/cart';
 
-const Shipping = () => {
+const Shipping = ({history}) => {
   const dispatch = useDispatch();
   const alert = useAlert();
   const { shippingInfo } = useSelector((state) => state.cart);
@@ -23,13 +25,26 @@ const Shipping = () => {
   const [pinCode, setPinCode] = useState(shippingInfo.pinCode);
   const [phoneNo, setPhoneNo] = useState(shippingInfo.phoneNo);
 
-    const shippingSubmit = () => {};
+    const shippingSubmit = (e) => {
+      e.preventDefault();
+
+      if(phoneNo.length !== 10){
+        alert.error('Phone number should be 10 digits Long!');
+        return;
+      }
+
+      dispatch(saveShippingInfo({address, city, state, country, pinCode, phoneNo}));
+
+      history.push('/order/confirm');
+    };
 
   return (
     <Fragment>
      <MetaData title="Shipping Details" />
 
-      <div className='shippingCenter'>
+     <CheckoutSteps activeStep={1} />
+
+      <div className='shippingContainer'>
         <div className='shippingBox'>
           <h2 className='shippingHeading'>Shipping Details</h2>
 

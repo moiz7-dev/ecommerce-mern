@@ -8,6 +8,8 @@ import "./Profile.css";
 const Profile = ({history}) => {
   const { loading, user, isAuthenticated } = useSelector((state) => state.user);
 
+  const avatar = user.avatar.url || '/Profile.png';
+
   useEffect(() => {
     if (!isAuthenticated) {
       history.push("/login");
@@ -23,7 +25,7 @@ const Profile = ({history}) => {
           <div className='profileContainer'>
             <div>
               <h1>My Profile</h1>
-              <img src={user.avatar.url} alt={user.name} />
+                <img src={avatar} alt={user.name} />
               <Link to='/me/update'>Edit Profile</Link>
             </div>
             <div>
