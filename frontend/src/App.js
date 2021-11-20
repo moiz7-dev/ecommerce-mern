@@ -21,6 +21,7 @@ import UpdatePassword from './components/User/UpdatePassword.js';
 import ForgotPassword from './components/User/ForgotPassword.js';
 import ResetPassword from './components/User/ResetPassword.js';
 import Cart from './components/Cart/Cart.js';
+import Shipping from './components/Cart/Shipping.js';
 
 const App = () => {
 
@@ -51,6 +52,7 @@ const App = () => {
             <ProtectedRoute exact path="/account" component={Profile} />
             <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
             <ProtectedRoute exact path="/password/update" component={UpdatePassword} />
+            <ProtectedRoute exact path="/shipping" component={Shipping} />
 
             <Route exact path="/login" component={LoginSignUp} />
             <Route exact path="/password/forgot" component={ForgotPassword} />
