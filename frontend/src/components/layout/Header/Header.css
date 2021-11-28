@@ -4,6 +4,10 @@
   top: 3vmax;
 }
 
+.speedDial > button.MuiSpeedDial-fab {
+  border-radius: 100%;
+}
+
 .speedDialIcon {
   width: 56px;
   height: 56px;

@@ -11,8 +11,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@stripe/react-stripe-js": "^1.6.0",
+    "@stripe/stripe-js": "^1.21.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.19.0",
+    "chart.js": "^3.6.0",
     "cloudinary": "^1.27.1",
     "cookie-parser": "^1.4.5",
     "dotenv": "^10.0.0",
@@ -21,7 +24,9 @@
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.0.11",
     "nodemailer": "^6.7.0",
+    "react-chartjs-2": "^4.0.0",
     "react-js-pagination": "^3.0.3",
+    "stripe": "^8.191.0",
     "validator": "^13.6.0",
     "webfontloader": "^1.6.28"
   }

@@ -1,6 +1,6 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
-import { BrowserRouter as Router, Route } from 'react-router-dom';
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import WebFont from 'webfontloader';
 
 import Header from './components/layout/Header/Header.js';
@@ -23,10 +23,28 @@ import ResetPassword from './components/User/ResetPassword.js';
 import Cart from './components/Cart/Cart.js';
 import Shipping from './components/Cart/Shipping.js';
 import ConfirmOrder from './components/Cart/ConfirmOrder.js';
+import Payment from './components/Cart/Payment.js';
+import OrderSuccess from './components/Cart/OrderSuccess.js';
+import axios from 'axios';
+import {loadStripe} from '@stripe/stripe-js';
+import {Elements} from '@stripe/react-stripe-js';
+import MyOrders from './components/Cart/MyOrders.js';
+import OrderDetails from './components/Cart/OrderDetails.js';
+import Dashboard from './components/Admin/Dashboard.js';
+import ProductsList from './components/Admin/ProductsList.js';
+import NewProduct from './components/Admin/NewProduct.js';
 
 const App = () => {
 
     const {isAuthenticated, user } = useSelector(state => state.user)
+
+    const [stripeApiKey, setStripeApiKey] = useState('');
+
+    async function getStripeApiKey() {
+        const {data} = await axios.get('/api/v1/stripeapikey');
+
+        setStripeApiKey(data.stripeApiKey);
+    }
 
     useEffect(() => {
         WebFont.load({
@@ -36,6 +54,7 @@ const App = () => {
         });
 
         store.dispatch(loadUser());
+        getStripeApiKey();
     }, [])
 
     return (
@@ -54,7 +73,23 @@ const App = () => {
             <ProtectedRoute exact path="/me/update" component={UpdateProfile} />
             <ProtectedRoute exact path="/password/update" component={UpdatePassword} />
             <ProtectedRoute exact path="/shipping" component={Shipping} />
-            <ProtectedRoute exact path="/order/confirm" component={ConfirmOrder} />
+
+            {stripeApiKey && (
+                <Elements stripe={loadStripe(stripeApiKey)}>
+                    <ProtectedRoute exact path="/process/payment" component={Payment} />
+                </Elements>
+            )}
+            <ProtectedRoute exact path="/success" component={OrderSuccess} />
+            <ProtectedRoute exact path="/orders" component={MyOrders} />
+
+            <Switch>
+                <ProtectedRoute exact path="/order/confirm" component={ConfirmOrder} />
+                <ProtectedRoute exact path="/order/:id" component={OrderDetails} />
+            </Switch>
+
+            <ProtectedRoute isAdmin={true} exact path="/admin/dashboard" component={Dashboard} />
+            <ProtectedRoute isAdmin={true} exact path="/admin/products" component={ProductsList} />
+            <ProtectedRoute isAdmin={true} exact path="/admin/product" component={NewProduct} />
 
             <Route exact path="/login" component={LoginSignUp} />
             <Route exact path="/password/forgot" component={ForgotPassword} />
