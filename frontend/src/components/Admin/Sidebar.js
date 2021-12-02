@@ -23,7 +23,7 @@ const Sidebar = () => {
           <DashboardIcon /> Dashboard
         </p>
       </Link>
-      <Link>
+      <Link to="/admin/products">
         <TreeView
           defaultCollapseIcon={<ExpandMoreIcon />}
           defaultExpandIcon={<ImportExportIcon />}

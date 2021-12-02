@@ -6,12 +6,11 @@ import { Link } from "react-router-dom";
 import { Doughnut, Line } from "react-chartjs-2";
 import { useSelector, useDispatch } from "react-redux";
 import { getAdminProduct } from "../../actions/product";
-// import { getAllOrders } from "../../actions/order.js";
-// import { getAllUsers } from "../../actions/user.js";
+import { getAllOrders } from "../../actions/order.js";
+import { getAllUsers } from "../../actions/user.js";
 import MetaData from "../layout/MetaData";
 
 const Dashboard = () => {
-
   const dispatch = useDispatch();
 
   const { products } = useSelector((state) => state.products);
@@ -31,13 +30,13 @@ const Dashboard = () => {
 
   useEffect(() => {
     dispatch(getAdminProduct());
-    // dispatch(getAllOrders());
-    // dispatch(getAllUsers());
+    dispatch(getAllOrders());
+    dispatch(getAllUsers());
   }, [dispatch]);
 
   let totalAmount = 0;
-  orders &&
-    orders.forEach((item) => {
+  orders.orders &&
+  orders.orders.forEach((item) => {
       totalAmount += item.totalPrice;
     });
 
@@ -46,7 +45,7 @@ const Dashboard = () => {
     datasets: [
       {
         label: "TOTAL AMOUNT",
-        backgroundColor: ["tomato"],
+        backgroundColor: ["rgb(26, 35, 126)"],
         hoverBackgroundColor: ["rgb(197, 72, 49)"],
         data: [0, totalAmount],
       },
@@ -65,40 +64,40 @@ const Dashboard = () => {
   };
 
   return (
-    <div className='dashboard'>
-      <MetaData title='Dashboard - Admin Panel' />
+    <div className="dashboard">
+      <MetaData title="Dashboard - Admin Panel" />
       <Sidebar />
 
-      <div className='dashboardContainer'>
-        <Typography component='h1'>Dashboard</Typography>
+      <div className="dashboardContainer">
+        <Typography component="h1">Dashboard</Typography>
 
-        <div className='dashboardSummary'>
+        <div className="dashboardSummary">
           <div>
             <p>
               Total Amount <br /> ₹{totalAmount}
             </p>
           </div>
-          <div className='dashboardSummaryBox2'>
-            <Link to='/admin/products'>
+          <div className="dashboardSummaryBox2">
+            <Link to="/admin/products">
               <p>Product</p>
               <p>{products && products.length}</p>
             </Link>
-            <Link to='/admin/orders'>
+            <Link to="/admin/orders">
               <p>Orders</p>
               <p>{orders && orders.length}</p>
             </Link>
-            <Link to='/admin/users'>
+            <Link to="/admin/users">
               <p>Users</p>
               <p>{users && users.length}</p>
             </Link>
           </div>
         </div>
 
-        <div className='lineChart'>
+        <div className="lineChart">
           <Line data={lineState} />
         </div>
 
-        <div className='doughnutChart'>
+        <div className="doughnutChart">
           <Doughnut data={doughnutState} />
         </div>
       </div>

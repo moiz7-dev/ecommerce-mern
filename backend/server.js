@@ -1,6 +1,5 @@
 const app = require('./app');
 
-const dotenv = require('dotenv');
 const cloudinary = require('cloudinary');
 const initDatabase = require('./config/database');
 
@@ -16,7 +15,9 @@ process.on('uncaughtException', (err) => {
 })
 
 //config
-dotenv.config({path: 'backend/config/config.env'});
+if(process.env.NODE_ENV !== 'PRODUCTION'){
+    require('dotenv').config({path: 'backend/config/config.env'});
+}
 
 // connect to database
 initDatabase();

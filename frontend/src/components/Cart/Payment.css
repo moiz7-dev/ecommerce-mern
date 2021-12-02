@@ -46,7 +46,7 @@
 
 .paymentFormBtn {
   border: none;
-  background-color: tomato;
+  background-color: rgb(26, 35, 126);
   color: white;
   font: 300 0.9vmax "Roboto";
   width: 100%;
@@ -57,7 +57,7 @@
 }
 
 .paymentFormBtn:hover {
-  background-color: rgb(179, 66, 46);
+  background-color: rgb(0, 6, 61);;
 }
 
 .paymentFormBtn:disabled {

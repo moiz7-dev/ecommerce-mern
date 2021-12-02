@@ -27,7 +27,7 @@
 .searchBox > input[type="submit"] {
   padding: 1vmax;
   border-radius: 0%;
-  background-color: tomato;
+  background-color: rgb(26, 35, 126);
   border: none;
   width: 10%;
   font: 300 1.1vmax "Roboto";
@@ -37,7 +37,7 @@
 }
 
 .searchBox > input[type="submit"]:hover {
-  background-color: rgb(255, 38, 0);
+  background-color: rgb(0, 6, 61);;
 }
 
 @media screen and (max-width: 600px) {
